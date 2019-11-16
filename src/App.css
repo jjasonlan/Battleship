@@ -6,7 +6,12 @@
 }
 
 .titleSection {
+  background-image: url('https://www.thoughtco.com/thmb/flGShd15h1XBptiJh8qqayz9ryg=/768x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/ghost-ship-108176802-5a4c3b85f1300a00372a2173.jpg');
+  background-size: cover;
+  background-position-y: 75%;
+  background-color: lightgray;
   padding: 5rem 0 2rem;
+  color: black;
 }
 
 .gameContainer {

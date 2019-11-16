@@ -19,11 +19,11 @@ const App = ({ board, opponentBoard, attempts, opponentAttempts }) => {
       <div className='gameContainer'>
         <div className='screen'>
           <h2>Opponent's Board</h2>
-          <Grid ships={opponentBoard} attempts={attempts}/>
+          <Grid side='opponent' ships={opponentBoard} attempts={attempts}/>
         </div>
         <div className='screen'>
           <h2>Your Board</h2>
-          <Grid ships={board} attempts={opponentAttempts}/>
+          <Grid side='player' ships={board} attempts={opponentAttempts}/>
         </div>
       </div>
     </div>
