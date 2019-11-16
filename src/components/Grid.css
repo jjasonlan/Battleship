@@ -13,6 +13,6 @@ table, td, th {
 }
 
 td, th {
-  height: 4vw;
   width: 4vw;
+  height: 4vw;
 }

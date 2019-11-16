@@ -1,7 +1,6 @@
 .container {
   text-align: center;
   background-color: #282c34;
-  height: 100%;
   font-size: calc(10px + 2vmin);
   color: white;
 }
@@ -11,7 +10,7 @@
 }
 
 .gameContainer {
-  padding: 2rem;
+  padding-bottom: 2rem;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
