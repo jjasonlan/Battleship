@@ -1,4 +1,4 @@
-import { SHOOT_LOCATION } from '../actions/battle'
+import { SHOOT_LOCATION, ANNOUNCE_VICTORY } from '../actions/battle'
 import { checkForSinking } from '../helpers'
 import { PLACE_SHIP, BEGIN_BATTLE_PHASE } from '../actions/placement'
 
@@ -55,48 +55,37 @@ const reducer = (state = initialState, action) => {
         newRow.splice(action.colIndex, 1, 1);
         return newRow
       })
-      let shipLocations = isPlayerAttempt ? state.opponentShipLocations : state.shipLocations
-      let shipSizesLeft = isPlayerAttempt ? state.opponentShipSizesLeft : state.shipSizesLeft
-      const { shipLength, shipIndex } = checkForSinking(attempts, shipLocations)
-      let newShipLocations, newShipSizesLeft
-      if (shipLength > 0) {
-        newShipLocations = shipLocations.filter((item, index) => index !== shipIndex)
-        const sizeIndex = shipSizesLeft.findIndex((item) => item === shipLength)
-        newShipSizesLeft = shipSizesLeft.splice(sizeIndex, 1)
-      } else {
-        newShipLocations = shipLocations
-        newShipSizesLeft = shipSizesLeft
+      let shipLocations = isPlayerAttempt ? state.opponentShipLocations.slice()
+        : state.shipLocations.slice()
+      let shipSizesLeft = isPlayerAttempt ? state.opponentShipSizesLeft.slice()
+        : state.shipSizesLeft.slice()
+      const { shipSize, shipIndex } = checkForSinking(attempts, shipLocations)
+      if (shipSize > 0) {
+        shipLocations.splice(shipIndex, 1)
+        const sizeIndex = shipSizesLeft.findIndex((item) => item === shipSize)
+        shipSizesLeft.splice(sizeIndex, 1)
       }
-      // console.log(Object.assign({}, state,
-      //   isPlayerAttempt ? {
-      //     turn: 'opponent',
-      //     attempts: attempts,
-      //     opponentShipLocations: newShipLocations,
-      //     opponentShipSizesLeft: newShipSizesLeft,
-      //   } : {
-      //     turn: 'player',
-      //     opponentAttempts: attempts,
-      //     shipLocations: newShipLocations,
-      //     shipSizesLeft: newShipSizesLeft,
-      //   }
-      // ))
-      console.log(isPlayerAttempt)
-      console.log(attempts)
 
       return Object.assign({},
         state, 
-        isPlayerAttempt ? {
+        state.turn === 'player' ? {
           turn: 'opponent',
-          attempts: attempts,
-          opponentShipLocations: newShipLocations,
-          opponentShipSizesLeft: newShipSizesLeft,
+          attempts,
+          opponentShipLocations: shipLocations,
+          opponentShipSizesLeft: shipSizesLeft,
         } : {
           turn: 'player',
           opponentAttempts: attempts,
-          shipLocations: newShipLocations,
-          shipSizesLeft: newShipSizesLeft,
+          shipLocations,
+          shipSizesLeft,
         }
       )
+    case ANNOUNCE_VICTORY:
+      return {
+        ...state,
+        gameState: 'complete',
+        winner: action.winner
+      }
     default:
       return state
   }

@@ -45,7 +45,7 @@ export const attemptShipPlacement = (board, startCoordinates, endCoordinates, sh
 export const checkForSinking = (attempts, shipLocations) => {
   let shipSize = 0
   let shipIndex = 0
-  let arr = shipLocations.forEach((ship, index) => {
+  shipLocations.forEach((ship, index) => {
     const startCoordinates = ship[0]
     const endCoordinates = ship[1]
     const bigY = startCoordinates[0] > endCoordinates[0] ? startCoordinates[0] : endCoordinates[0] 

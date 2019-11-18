@@ -1,7 +1,7 @@
 import React from 'react' // eslint-disable-line no-unused-vars
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { shootLocation } from '../actions/battle'
+import { shootLocation, announceVictory } from '../actions/battle'
 import { placeShip, beginBattlePhase } from '../actions/placement'
 
 function sleep(ms) {
@@ -13,9 +13,7 @@ function sleep(ms) {
  * 
  * @param turn - Player or computer turn to move
  * @param gameState - Current phase of the game (placement, battle, complete)
- * @param board - Player's board
  * @param opponentBoard - Opponent's board
- * @param attempts - Player's attempts
  * @param opponentAttempts - Opponent's attempts
  * @param shootLocation - Fire at cell location
  * @param shipSizesToPlace - Player's ships to place
@@ -23,7 +21,10 @@ function sleep(ms) {
  * @param placeShip - Set ship coordinates
  * @param shipLocations - Array of start and end coordinates of player ships
  * @param opponentShipLocations - Array of start and end coordinates of opponent ships
+ * @param shipSizesLeft - Array of unsunk player ship sizes
+ * @param opponentShipSizesLeft - Array of unsunk opponent ship sizes
  * @param beginBattlePhase - Set gameState to battle phase
+ * @param announceVictory - Set gameState to complete
  * @param children - The rendered app
  */
 const GameController = (props) => {
@@ -31,12 +32,15 @@ const GameController = (props) => {
     turn,
     gameState,
     opponentAttempts,
+    shipSizesLeft,
+    opponentShipSizesLeft,
     opponentBoard,
     shootLocation,
     shipSizesToPlace,
     opponentShipSizesToPlace,
     placeShip,
     beginBattlePhase,
+    announceVictory,
     children
   } = props
   
@@ -78,6 +82,14 @@ const GameController = (props) => {
     }
   }
 
+  const checkForVictory = () => {
+    if (shipSizesLeft.length === 0) {
+      announceVictory('opponent')
+    } else if (opponentShipSizesLeft.length === 0) {
+      announceVictory('player')
+    }
+  }
+
   // Make a move for AI during opponent's turn
   const simpleAI = async () => {
     if (turn === 'opponent') {
@@ -96,6 +108,7 @@ const GameController = (props) => {
       }
     }
   }
+
   // eslint-disable-next-line default-case
   switch (gameState) {
     case 'placement':
@@ -104,43 +117,46 @@ const GameController = (props) => {
       break
     case 'battle':
       simpleAI()
+      checkForVictory()
   }
 
   return children
 }
 
 
-const mapStateToProps = (state, props) => ({
+const mapStateToProps = (state) => ({
   turn: state.gameState.turn,
-  board: state.gameState.board,
   opponentBoard: state.gameState.opponentBoard,
-  attempts: state.gameState.attempts,
   opponentAttempts: state.gameState.opponentAttempts,
   gameState: state.gameState.gameState,
   shipSizesToPlace: state.shipPlacement.shipSizesToPlace,
   opponentShipSizesToPlace: state.shipPlacement.opponentShipSizesToPlace,
   shipLocations: state.gameState.shipLocations,
   opponentShipLocations: state.gameState.opponentShipLocations,
+  shipSizesLeft: state.gameState.shipSizesLeft,
+  opponentShipSizesLeft: state.gameState.opponentShipSizesLeft,
 })
 
 const mapDispatchToProps = {
   shootLocation,
   placeShip,
   beginBattlePhase,
+  announceVictory,
 }
 
 GameController.propTypes = {
   turn: PropTypes.oneOf(['player', 'opponent']).isRequired,
   gameState: PropTypes.oneOf(['placement', 'battle', 'complete']).isRequired,
-  board: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
   opponentBoard: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
-  attempts: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
   opponentAttempts: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
   shipSizesToPlace: PropTypes.arrayOf(PropTypes.number).isRequired,
   opponentShipSizesToPlace: PropTypes.arrayOf(PropTypes.number).isRequired,
   shipLocations: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number))),
   opponentShipLocations: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number))),
+  shipSizesLeft: PropTypes.arrayOf(PropTypes.number).isRequired,
+  opponentShipSizesLeft: PropTypes.arrayOf(PropTypes.number).isRequired,
   shootLocation: PropTypes.func.isRequired,
+  announceVictory: PropTypes.func.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameController);

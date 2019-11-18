@@ -67,7 +67,7 @@ const Cell = (props) => {
         return
       case 'battle':
         if (!marker && side === 'opponent' && turn === 'player') {
-          shootLocation(side, row, col)
+          shootLocation(row, col)
         }
         return
       default:

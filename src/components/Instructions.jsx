@@ -2,6 +2,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
+/**
+ * Instructions explaining how to play the game
+ * 
+ * @param gameState - State of the game (placement, battle, complete)
+ * @param winner - Who won? 
+ */
 const Instructions = ({ gameState, winner }) => {
   let mainInstruction, description;
   switch (gameState) {
@@ -19,9 +25,10 @@ const Instructions = ({ gameState, winner }) => {
       break
     default:
       if (winner === 'player') {
-        return 'You Win!'
+        mainInstruction = 'You Win!'
+      } else {
+        mainInstruction = 'You Lose!'
       }
-      return 'You Lose!'
   }
 
   return (
