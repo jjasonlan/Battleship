@@ -66,9 +66,7 @@ const GameController = (props) => {
     throw new Error('AI could not place ship')
   }
 
-  const simplePlaceShip = async () => {
-    // pause a second for thinking...
-    await sleep(1000)
+  const simplePlaceShip = () => {
     const size = opponentShipSizesToPlace[0]
     if (size !== undefined) {
       const { start, end } = findAvailableShipLocation(opponentBoard, size)

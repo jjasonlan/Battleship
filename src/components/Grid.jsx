@@ -53,7 +53,9 @@ const Grid = ({ side, shipSizesLeft, gameState, shipSizesToPlace }) => {
   )
   const boardName = `${side.charAt(0).toUpperCase() + side.slice(1)}'s board`
   const shipCounter = gameState === 'placement'
-    ? `Ship sizes left to place: [${shipSizesToPlace}]`
+    ? shipSizesToPlace.length > 0
+      ? `Ship sizes left to place: [${shipSizesToPlace}]`
+      : 'Ready!'
     : gameState === 'battle'
       ? `Ship sizes left to sink: [${shipSizesLeft}]`
       : null
