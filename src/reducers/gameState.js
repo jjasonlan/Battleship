@@ -59,7 +59,6 @@ const reducer = (state = initialState, action) => {
         : state.shipLocations.slice()
       let shipSizesLeft = isPlayerAttempt ? state.opponentShipSizesLeft.slice()
         : state.shipSizesLeft.slice()
-      console.log(shipLocations)
       const { shipSize, shipIndex } = checkForSinking(attempts, shipLocations)
       if (shipSize > 0) {
         shipLocations.splice(shipIndex, 1)
