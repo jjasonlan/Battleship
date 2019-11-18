@@ -61,7 +61,7 @@ const Grid = ({ side, shipSizesLeft, gameState, shipSizesToPlace }) => {
   return (
     <React.Fragment key={side}>
       <h2>{boardName}</h2>
-      <h3>{shipCounter}</h3>
+      <p>{shipCounter}</p>
       <table className='container'>
         <thead>
           {renderColumnHeaders()}
