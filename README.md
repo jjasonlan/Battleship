@@ -8,6 +8,10 @@ For official rules, see the [wiki](https://en.wikipedia.org/wiki/Battleship_(gam
 
 ## How to Play
 
+The app is hosted here [https://jjasonlan.github.io/Battleship/](https://jjasonlan.github.io/Battleship/).
+
+## Running Locally
+
 `yarn start` to run the app in development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
