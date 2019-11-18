@@ -1,17 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import './index.css'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
-import rootReducer from './redux/reducer'
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import rootReducer from './reducers/rootReducer'
+import App from './components/App.jsx'
+import GameController from './components/GameController.jsx'
+import * as serviceWorker from './serviceWorker'
 
 const store = createStore(rootReducer)
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <GameController>
+      <App />
+    </GameController>
   </Provider>,
   document.getElementById('root')
 )

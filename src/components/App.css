@@ -24,3 +24,11 @@
 .screen {
   width: 45%;
 }
+
+.active {
+  border: 1px dotted #B0E2FF;
+}
+
+.inActive {
+  opacity: 50%;
+}
