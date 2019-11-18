@@ -42,4 +42,5 @@ App.propTypes = {
   gameState: PropTypes.oneOf(['placement', 'battle', 'complete']).isRequired,
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps)(App)
+export { App }

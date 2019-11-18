@@ -56,11 +56,11 @@ export const checkForSinking = (attempts, shipLocations) => {
     const length = bigY - smallY + 1
     const size = width > length ? width : length
     for (let row = smallY; row <= bigY; row++) {
-      for (let col = smallX; col <= bigX; col ++) {
+      for (let col = smallX; col <= bigX; col++) {
         if (attempts[row][col] === 0) {
           return
         }
-        if (col === bigX && attempts[row][col] === 1) {
+        if (col === bigX && row === bigY && attempts[row][col] === 1) {
           shipSize = size
           shipIndex = index
         }

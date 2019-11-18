@@ -5,7 +5,7 @@ import { PLACE_SHIP, BEGIN_BATTLE_PHASE } from '../actions/placement'
 // initialize a 10x10 board with all 0s
 const createBoard = () => ([...Array(10).keys()].map(() => Array(10).fill(0)))
 
-const initialState = {
+export const initialState = {
   gameState: 'placement',
   shipSizesLeft: [5, 4, 3, 3, 2],
   opponentShipSizesLeft: [5, 4, 3, 3, 2],
@@ -59,6 +59,7 @@ const reducer = (state = initialState, action) => {
         : state.shipLocations.slice()
       let shipSizesLeft = isPlayerAttempt ? state.opponentShipSizesLeft.slice()
         : state.shipSizesLeft.slice()
+      console.log(shipLocations)
       const { shipSize, shipIndex } = checkForSinking(attempts, shipLocations)
       if (shipSize > 0) {
         shipLocations.splice(shipIndex, 1)

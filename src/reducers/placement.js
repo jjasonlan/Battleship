@@ -1,6 +1,6 @@
 import { START_PLACEMENT, PLACE_SHIP } from '../actions/placement'
 
-const initialState = {
+export const initialState = {
   shipSizesToPlace: [5, 4, 3, 3, 2],
   opponentShipSizesToPlace: [5, 4, 3, 3, 2],
   placementStarted: false,

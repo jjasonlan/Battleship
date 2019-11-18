@@ -67,14 +67,14 @@ const GameController = (props) => {
   }
 
   const simplePlaceShip = async () => {
-    // pause half a second for thinking...
-    await sleep(500)
+    // pause a second for thinking...
+    await sleep(1000)
     const size = opponentShipSizesToPlace[0]
     if (size !== undefined) {
       const { start, end } = findAvailableShipLocation(opponentBoard, size)
       placeShip('opponent', opponentBoard, start, end, opponentShipSizesToPlace)
-      }
     }
+  }
 
   const checkPlacement = () => {
     if (shipSizesToPlace.length === 0 && opponentShipSizesToPlace.length === 0) {
@@ -85,9 +85,12 @@ const GameController = (props) => {
   const checkForVictory = () => {
     if (shipSizesLeft.length === 0) {
       announceVictory('opponent')
+      return true
     } else if (opponentShipSizesLeft.length === 0) {
       announceVictory('player')
+      return true
     }
+    return false
   }
 
   // Make a move for AI during opponent's turn
@@ -116,8 +119,9 @@ const GameController = (props) => {
       checkPlacement()
       break
     case 'battle':
-      simpleAI()
-      checkForVictory()
+      if (!checkForVictory()) {
+        simpleAI()
+      }
   }
 
   return children
